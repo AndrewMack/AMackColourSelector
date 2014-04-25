@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace AMackColourSelectorModels
 {
-    public class Class1
+    public class Colour
     {
+        private RGB rgb;
     }
 }
