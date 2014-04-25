@@ -8,10 +8,13 @@ namespace AMackColourSelectorModels
 {
     public class RGB
     {
+        #region privateFields
         private byte _r;
         private byte _g;
         private byte _b;
+        #endregion privateFields
 
+        #region properties
         public byte R {
             get { return _r; }
         }
@@ -21,18 +24,34 @@ namespace AMackColourSelectorModels
         public byte B {
             get { return _b; }
         }
+        #endregion properties
 
+        #region constructors
         public RGB(byte r, byte g, byte b) {
+            SetRGB(r, g, b);
+        }
+
+        public RGB(int r, int g, int b) {
+            SetRGB(r, g, b);
+        }
+        #endregion constructors
+
+        public void SetRGB(byte r, byte g, byte b) {
             _r = r;
             _g = g;
             _b = b;
         }
 
-        public RGB(int r, int g, int b) {
+        public void SetRGB(int r, int g, int b) {
             ChangeValuesWhereNeeded(ref r, ref g, ref b);
             _r = (byte)r;
             _g = (byte)g;
             _b = (byte)b;
+        }
+
+        public HSB GetHSB() {
+            System.Drawing.Color c = System.Drawing.Color.FromArgb(_r, _g, _b);
+            return new HSB(c.GetHue(), c.GetSaturation(), c.GetBrightness());
         }
 
         private void ChangeValuesWhereNeeded(ref int r, ref int g, ref int b) {
