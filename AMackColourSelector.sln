@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMackColourSelectorModels", "AMackColourSelectorModels\AMackColourSelectorModels.csproj", "{7E6F189C-84C4-4F69-879B-5B952330DC8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMackColourSelectorConsole", "AMackColourSelectorConsole\AMackColourSelectorConsole.csproj", "{727656C5-8760-4A8B-99D8-DADC26358516}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{7E6F189C-84C4-4F69-879B-5B952330DC8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E6F189C-84C4-4F69-879B-5B952330DC8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E6F189C-84C4-4F69-879B-5B952330DC8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{727656C5-8760-4A8B-99D8-DADC26358516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{727656C5-8760-4A8B-99D8-DADC26358516}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{727656C5-8760-4A8B-99D8-DADC26358516}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{727656C5-8760-4A8B-99D8-DADC26358516}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

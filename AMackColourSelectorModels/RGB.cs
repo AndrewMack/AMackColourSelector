@@ -51,7 +51,21 @@ namespace AMackColourSelectorModels
 
         public HSB GetHSB() {
             System.Drawing.Color c = System.Drawing.Color.FromArgb(_r, _g, _b);
-            return new HSB(c.GetHue(), c.GetSaturation(), c.GetBrightness());
+            return new HSB(c.GetHue(), c.GetSaturation(), GetBrightness());
+        }
+
+        private float GetBrightness() {
+            int max, min;
+            float brightness;
+
+            int[] nums = { _r, _g, _b };
+
+            max = nums.Max();
+            min = nums.Min();
+
+            brightness = ((max + min) / 2f) / 255f;
+
+            return brightness;
         }
 
         private void ChangeValuesWhereNeeded(ref int r, ref int g, ref int b) {

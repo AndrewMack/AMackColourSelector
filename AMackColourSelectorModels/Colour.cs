@@ -27,7 +27,7 @@ namespace AMackColourSelectorModels
 
         #region constructors
         public Colour(RGB colourRGB) {
-            rgb = new RGB(colourRGB.R, colourRGB.B, colourRGB.B);
+            rgb = new RGB(colourRGB.R, colourRGB.G, colourRGB.B);
             SetHSBFromRGB();
         }
 

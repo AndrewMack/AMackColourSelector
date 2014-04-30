@@ -53,7 +53,7 @@ namespace AMackColourSelectorModels
         }
 
         private void SetHue(float hue) {
-            if (hue < 0f || hue >= 360) {
+            if (hue < 0f || hue >= 360f) {
                 hue = 0f;
             }
             _hue = hue;
