@@ -45,6 +45,7 @@ namespace AMackColourSelectorModels
 
         public void SetColour(HSB colourHSB) {
             hsb.SetHSB(colourHSB.Hue, colourHSB.Saturation, colourHSB.Brightness);
+            SetRGBFromHSB();
         }
 
         public System.Drawing.Color GetSystemDrawingColour() {

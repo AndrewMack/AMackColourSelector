@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace AMackColourSelectorModels.ViewModels
 {
-    public class ColourVM : INotifyPropertyChanged
+    public class ColourVM 
     {
         private Colour _colour;
         private RGBVM _rgb;
