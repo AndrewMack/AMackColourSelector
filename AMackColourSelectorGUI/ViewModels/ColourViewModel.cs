@@ -24,6 +24,7 @@ namespace AMackColourSelectorGUI.ViewModels
         private int _brightness;
 
         private System.Windows.Media.Color _mediaColor;
+        private System.Windows.Media.Color _midBrightnessColor;
         #endregion privateFields
 
         #region publicProperties
@@ -54,7 +55,10 @@ namespace AMackColourSelectorGUI.ViewModels
         public int Hue {
             get { return _hue; }
             set {
-                _hue = value;
+                int hue = value;
+                if (hue >= 360) { hue = 359; }
+                else if (hue < 0) { hue = 0; }
+                _hue = hue;
                 RaiseHSBPropertyAndColourChange("Hue");
             }
         }
@@ -62,7 +66,10 @@ namespace AMackColourSelectorGUI.ViewModels
         public int Saturation {
             get { return _saturation; }
             set {
-                _saturation = value;
+                int saturation = value;
+                if (saturation > 100) { saturation = 100; }
+                else if (saturation < 0) { saturation = 0; }
+                _saturation = saturation;
                 RaiseHSBPropertyAndColourChange("Saturation");
             }
         }
@@ -70,13 +77,28 @@ namespace AMackColourSelectorGUI.ViewModels
         public int Brightness {
             get { return _brightness; }
             set {
-                _brightness = value;
+                int brightness = value;
+                if (brightness > 100) { brightness = 100; }
+                else if (brightness < 0) { brightness = 0; }
+                _brightness = brightness;
                 RaiseHSBPropertyAndColourChange("Brightness");
             }
         }
 
         public System.Windows.Media.Color MediaColour {
             get { return _mediaColor; }
+        }
+
+        public System.Windows.Media.Color MidBrightnessMediaColor {
+            get { return _midBrightnessColor; }
+        }
+
+        public Colour CurrentColour {
+            get { return _colour; }
+        }
+
+        public Colour InitialColour {
+            get { return _initialColour; }
         }
         #endregion publicProperties
 
@@ -97,6 +119,10 @@ namespace AMackColourSelectorGUI.ViewModels
 
         public void SetColourFromPointInSize(System.Windows.Point point, System.Windows.Size size) {
             float hue = (float)((point.X / size.Width) * 360);
+            if (hue >= 360f) {
+                hue = 359f;
+            }
+
             float saturation = (float)(1f - (point.Y / size.Height));
             float brightness = (float)(_brightness / 100f);
 
@@ -105,6 +131,7 @@ namespace AMackColourSelectorGUI.ViewModels
             ResetHSBValues();
             ResetRGBValues();
             ResetMediaColour();
+            ResetMidBrightColour();
 
             RaiseCompleteColourChange();
         }
@@ -114,8 +141,11 @@ namespace AMackColourSelectorGUI.ViewModels
             _colour.SetColour(new RGB(_r, _g, _b));
             ResetHSBValues();
             ResetMediaColour();
+            ResetMidBrightColour();
+
             RaiseHSBPropertiesChanged();
             RaiseMediaColourChanged();
+            RaiseMidBrightColourChanged();
         }
 
         private void RaiseHSBPropertyAndColourChange(string propertyName) {
@@ -127,8 +157,14 @@ namespace AMackColourSelectorGUI.ViewModels
             _colour.SetColour(new HSB(hue, sat, bri));
             ResetRGBValues();
             ResetMediaColour();
+            
             RaiseRGBPropertiesChanged();
             RaiseMediaColourChanged();
+
+            if (propertyName.ToLower() != "brightness") {
+                ResetMidBrightColour();
+                RaiseMidBrightColourChanged();
+            }
         }
 
         private void RaiseRGBPropertiesChanged() {
@@ -147,10 +183,15 @@ namespace AMackColourSelectorGUI.ViewModels
             RaisePropertyChanged("MediaColour");
         }
 
+        private void RaiseMidBrightColourChanged() {
+            RaisePropertyChanged("MidBrightnessMediaColor");
+        }
+
         private void RaiseCompleteColourChange() {
             RaiseRGBPropertiesChanged();
             RaiseHSBPropertiesChanged();
             RaiseMediaColourChanged();
+            RaiseMidBrightColourChanged();
         }
 
         private void ResetRGBValues() {
@@ -169,6 +210,10 @@ namespace AMackColourSelectorGUI.ViewModels
             _mediaColor = System.Windows.Media.Color.FromRgb(_r, _g, _b);
         }
 
+        private void ResetMidBrightColour() {
+            _midBrightnessColor = GetMidBrightColor();
+        }
+
         private void SetValuesFromColour(Colour colour) {
             _colour.SetColour(colour.RGB);
 
@@ -181,6 +226,13 @@ namespace AMackColourSelectorGUI.ViewModels
             _brightness = (int)(colour.HSB.Brightness * 100f);
 
             _mediaColor = System.Windows.Media.Color.FromRgb(_r, _g, _b);
+            _midBrightnessColor = GetMidBrightColor();
+        }
+
+        private System.Windows.Media.Color GetMidBrightColor() {
+            HSB hsb = new HSB(_colour.HSB.Hue, _colour.HSB.Saturation, 0.5f);
+            RGB rgb = hsb.GetRGB();
+            return System.Windows.Media.Color.FromRgb(rgb.R, rgb.G, rgb.B);
         }
 
         public void RaisePropertyChanged(string propertyName) {

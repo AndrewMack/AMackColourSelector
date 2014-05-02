@@ -47,6 +47,21 @@ namespace AMackColourSelectorModels
             SetBrightness(bri);
         }
 
+        public override bool Equals(object obj) {
+            try {
+                HSB hsbObj = (HSB)obj;
+                if (_hue == hsbObj._hue && _saturation == hsbObj._saturation && _brightness == hsbObj._brightness) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            catch (Exception) {
+                return base.Equals(obj);
+            }
+        }
+
         public RGB GetRGB() {
             RGB rgb = CalculateToRGB();
             return rgb;

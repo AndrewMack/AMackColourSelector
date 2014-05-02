@@ -68,5 +68,11 @@ namespace AMackColourSelectorGUI
                 SendClickInformationToViewModel(r, e.MouseDevice.GetPosition((Rectangle)sender));
             }
         }
+
+        private void CurrentColourRectangle_MouseDown(object sender, MouseButtonEventArgs e) {
+            Rectangle r = (Rectangle)sender;
+            string rgbCurrentColour = ViewModel.CurrentColour.ToString();
+            DragDrop.DoDragDrop(r, rgbCurrentColour, DragDropEffects.Copy);
+        }
     }
 }

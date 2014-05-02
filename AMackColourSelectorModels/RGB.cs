@@ -49,6 +49,21 @@ namespace AMackColourSelectorModels
             _b = (byte)b;
         }
 
+        public override bool Equals(object obj) {
+            try {
+                RGB rgbObj = (RGB)obj;
+                if (_r == rgbObj._r && _g == rgbObj._g && _b == rgbObj._b) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            catch (Exception) {
+                return base.Equals(obj);
+            }
+        }
+
         public HSB GetHSB() {
             System.Drawing.Color c = System.Drawing.Color.FromArgb(_r, _g, _b);
             return new HSB(c.GetHue(), c.GetSaturation(), GetBrightness());

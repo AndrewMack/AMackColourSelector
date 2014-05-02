@@ -48,6 +48,22 @@ namespace AMackColourSelectorModels
             SetRGBFromHSB();
         }
 
+        public bool IsSameColour(Colour c) {
+            return rgb.Equals(c.rgb);
+        }
+
+        public bool IsSameColour(RGB rgb) {
+            return this.rgb.Equals(rgb);
+        }
+
+        public bool IsSameColour(HSB hsb) {
+            return this.hsb.Equals(hsb);
+        }
+
+        public override string ToString() {
+            return String.Format("{0},{1},{2}", rgb.R, rgb.G, rgb.B);
+        }
+
         public System.Drawing.Color GetSystemDrawingColour() {
             return System.Drawing.Color.FromArgb(rgb.R, rgb.G, rgb.B);
         }

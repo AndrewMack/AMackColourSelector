@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" 
         Height="280" Width="420"
-        MinHeight="180" MinWidth="320"
+        MinHeight="180" MinWidth="380"
+        MaxHeight="380" MaxWidth="580"
         WindowStartupLocation="CenterScreen">
     <DockPanel>
         <DockPanel DockPanel.Dock="Left"
@@ -40,7 +41,7 @@
                                     Margin="4"
                                     VerticalAlignment="Center">
                             <Rectangle Width="60" Height="44"
-                                       Stroke="Black" StrokeThickness="1" RadiusX="2" RadiusY="2">
+                                       Stroke="Black" StrokeThickness="1" RadiusX="2" RadiusY="2" MouseDown="CurrentColourRectangle_MouseDown">
                                 <Rectangle.Fill>
                                     <SolidColorBrush Color="{Binding MediaColour, UpdateSourceTrigger=PropertyChanged}" />
                                 </Rectangle.Fill>
@@ -129,6 +130,7 @@
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStop Offset="0" Color="White" />
+                                <GradientStop Offset="0.5" Color="{Binding MidBrightnessMediaColor, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <GradientStop Offset="1" Color="Black" />
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
