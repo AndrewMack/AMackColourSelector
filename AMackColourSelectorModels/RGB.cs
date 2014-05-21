@@ -64,6 +64,14 @@ namespace AMackColourSelectorModels
             }
         }
 
+        public override int GetHashCode() {
+            return base.GetHashCode();
+        }
+
+        public override string ToString() {
+            return String.Format("{0},{1},{2}", _r, _g, _b);
+        }
+
         public HSB GetHSB() {
             System.Drawing.Color c = System.Drawing.Color.FromArgb(_r, _g, _b);
             return new HSB(c.GetHue(), c.GetSaturation(), GetBrightness());
@@ -77,7 +85,7 @@ namespace AMackColourSelectorModels
 
             max = nums.Max();
             min = nums.Min();
-
+            
             brightness = ((max + min) / 2f) / 255f;
 
             return brightness;

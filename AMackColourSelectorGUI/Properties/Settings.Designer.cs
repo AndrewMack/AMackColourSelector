@@ -22,5 +22,17 @@ namespace AMackColourSelectorGUI.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Colours {
+            get {
+                return ((string)(this["Colours"]));
+            }
+            set {
+                this["Colours"] = value;
+            }
+        }
     }
 }

@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ColoursStateManagerExtensions\UserSettingsStateManager.cs" />
     <Compile Include="ViewModels\ColourViewModel.cs" />
     <Page Include="FullView.xaml">
       <Generator>MSBuild:Compile</Generator>

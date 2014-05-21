@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using AMackColourSelectorModels;
+using AMackColourSelectorModels.ColourUtilities.CustomColoursUtility.StateManagement;
 using System.ComponentModel;
 
 namespace AMackColourSelectorGUI.ViewModels
@@ -14,6 +16,8 @@ namespace AMackColourSelectorGUI.ViewModels
         #region privateFields
         private Colour _initialColour;
         private Colour _colour;
+
+        private ColourCollection _customColours;
         
         private byte _r;
         private byte _b;
@@ -25,6 +29,8 @@ namespace AMackColourSelectorGUI.ViewModels
 
         private System.Windows.Media.Color _mediaColor;
         private System.Windows.Media.Color _midBrightnessColor;
+
+        private Colour _selectedColour;
         #endregion privateFields
 
         #region publicProperties
@@ -100,6 +106,15 @@ namespace AMackColourSelectorGUI.ViewModels
         public Colour InitialColour {
             get { return _initialColour; }
         }
+
+        public ICollection CustomColours {
+            get { return _customColours; }
+            set { RaisePropertyChanged("CustomColours"); }
+        }
+
+        public Colour SelectedColour {
+            get { return _selectedColour; }
+        }
         #endregion publicProperties
 
         #region constructors
@@ -108,14 +123,22 @@ namespace AMackColourSelectorGUI.ViewModels
             _initialColour = colour;
             _colour = new Colour(colour.RGB);
             SetValuesFromColour(colour);
+
+            _customColours = new ColourCollection(new ColoursStateManagerExtensions.UserSettingsStateManager());
         }
 
         public ColourViewModel(Colour colour) {
             _initialColour = colour;
             _colour = new Colour(colour.RGB);
             SetValuesFromColour(colour);
+            _customColours = new ColourCollection();
         }
         #endregion constructors
+
+        public void AddColourToCustomColours(Colour c) {
+            _customColours.Add(c);
+            _customColours.Save();
+        }
 
         public void SetColourFromPointInSize(System.Windows.Point point, System.Windows.Size size) {
             float hue = (float)((point.X / size.Width) * 360);
@@ -134,6 +157,20 @@ namespace AMackColourSelectorGUI.ViewModels
             ResetMidBrightColour();
 
             RaiseCompleteColourChange();
+        }
+
+        public void SetColour(Colour c) {
+            _colour.SetColour(c.RGB);
+            ResetRGBValues();
+            ResetHSBValues();
+            ResetMediaColour();
+            ResetMidBrightColour();
+
+            RaiseCompleteColourChange();
+        }
+
+        public void SetSelectedColour() {
+            _selectedColour = new Colour(_colour.RGB);
         }
 
         private void RaiseRGBPropertyAndColourChange(string propertyName) {

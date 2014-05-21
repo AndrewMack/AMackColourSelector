@@ -23,6 +23,9 @@ namespace AMackColourSelectorModels
         public HSB HSB {
             get { return hsb; }
         }
+        public System.Windows.Media.Color MediaColor {
+            get { return System.Windows.Media.Color.FromRgb(rgb.R, rgb.G, rgb.B); }
+        }
         #endregion properties
 
         #region constructors
@@ -75,6 +78,13 @@ namespace AMackColourSelectorModels
             }
         }
         #endregion publicMethods
+        #region publicStaticMethods
+        public static bool TryParse(string colourString, out Colour c) {
+            c = null;
+
+            return true;
+        }
+        #endregion publicStaticMethods
 
         #region privateMethods
         private void SetHSBFromRGB() {

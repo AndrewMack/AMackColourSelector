@@ -35,7 +35,6 @@ namespace AMackColourSelectorGUI
 
         public MainWindow() {
             ColourViewModel cvm = new ColourViewModel();
-
             viewModel = cvm;
             this.DataContext = ViewModel;
             InitializeComponent();
@@ -47,6 +46,11 @@ namespace AMackColourSelectorGUI
             ViewModel.SetColourFromPointInSize(p, size);
         }
 
+        private void ListBoxItemSelected(ListBox lb) {
+
+        }
+
+        #region events
         private void RECT_MouseDown(object sender, MouseButtonEventArgs e) {
             SendClickInformationToViewModel((Rectangle)sender, e.MouseDevice.GetPosition((Rectangle)sender));
         }
@@ -74,5 +78,54 @@ namespace AMackColourSelectorGUI
             string rgbCurrentColour = ViewModel.CurrentColour.ToString();
             DragDrop.DoDragDrop(r, rgbCurrentColour, DragDropEffects.Copy);
         }
+
+        private void ListBoxCustomColours_DragEnter(object sender, DragEventArgs e) {
+            string dragAndDropValue = (string)e.Data.GetData(DataFormats.StringFormat);
+            AMackColourSelectorModels.ColourUtilities.ColourStringParsers.RGBColourStringParser hex = new AMackColourSelectorModels.ColourUtilities.ColourStringParsers.RGBColourStringParser();
+
+            AMackColourSelectorModels.Colour c;
+            if (hex.TryParse(dragAndDropValue, out c)) {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void ListBoxCustomColours_DragDrop(object sender, DragEventArgs e) {
+            string dragAndDropValue = (string)e.Data.GetData(DataFormats.StringFormat);
+            AMackColourSelectorModels.ColourUtilities.ColourStringParsers.RGBColourStringParser hex = new AMackColourSelectorModels.ColourUtilities.ColourStringParsers.RGBColourStringParser();
+
+            AMackColourSelectorModels.Colour c;
+            if (hex.TryParse(dragAndDropValue, out c)) {
+                ViewModel.AddColourToCustomColours(c);
+            }
+        }
+
+        private void ListBox_MouseDown(object sender, MouseButtonEventArgs e) {
+            ListBox lb = (ListBox)sender;
+            AMackColourSelectorModels.Colour c = (AMackColourSelectorModels.Colour)lb.SelectedItem;
+            if (c != null) {
+                ViewModel.SetColour(c);
+            }
+        }
+
+        private void ListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
+            ListBox lb = (ListBox)sender;
+            DependencyObject rect = (DependencyObject)lb.InputHitTest(e.MouseDevice.GetPosition(lb));
+
+            while (rect != null && rect.GetType() != typeof(ListBoxItem)) {
+                rect = VisualTreeHelper.GetParent(rect);
+            }
+
+            if (rect == null) {
+                return;
+            }
+
+            ListBoxItem lbi = (ListBoxItem)rect;
+
+            AMackColourSelectorModels.Colour c = (AMackColourSelectorModels.Colour)lbi.Content;
+            if (c != null) {
+                ViewModel.SetColour(c);
+            }
+        }
+        #endregion events
     }
 }
